@@ -16,5 +16,6 @@ namespace MegaventoryTask.Dto
     {
         public string DiscountName { get; set; }
         public double DiscountValue { get; set; }
+        public string  DiscountDescription { get; set; }
     }
 }

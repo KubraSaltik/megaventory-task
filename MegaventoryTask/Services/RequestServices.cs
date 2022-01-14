@@ -12,30 +12,18 @@ namespace MegaventoryTask.Services
 {
     public interface IRequestService
     {
-        ResponseResult<TResponse> Request<TResponse>(object data, string requestURI, HttpClient httpClient, List<KeyValuePair<string, string>> contentData = null) where TResponse : new();
+        public ResponseResult Request(object data, string requestURI, HttpMethod method, List<KeyValuePair<string, string>> contentData = null);
 
-        ResponseResult<TResponse> Get<TResponse>(string uri, HttpClient httpClient, List<KeyValuePair<string, string>> contentData = null) where TResponse : new();
     }
     public class RequestService : IRequestService
     {
         private Task<HttpResponseMessage> result { get; set; }
-
-        public ResponseResult<TResponse> Request<TResponse>(object data, string requestURI, HttpClient httpClient, List<KeyValuePair<string, string>> contentData = null) where TResponse : new()
-        {
-
-            return Request<TResponse>(data, requestURI, HttpMethod.Post, httpClient, contentData);
-        }
-
-        public ResponseResult<TResponse> Get<TResponse>(string uri, HttpClient httpClient, List<KeyValuePair<string, string>> contentData = null) where TResponse : new()
-        {
-            return Request<TResponse>(null, uri, HttpMethod.Get, httpClient, contentData);
-        }
-
-        public ResponseResult<TModel> Request<TModel>(object data, string requestURI, HttpMethod method, HttpClient client, List<KeyValuePair<string, string>> contentData = null) where TModel : new()
+        private HttpClient _httpClient = new HttpClient();
+        public ResponseResult Request(object data, string requestURI, HttpMethod method, List<KeyValuePair<string, string>> contentData = null)
         {
             string contentSerialized = string.Empty;
             StringContent content = new StringContent("");
-            ResponseResult<TModel> response = new ResponseResult<TModel>();
+            ResponseResult response = new ResponseResult();
             if (data != null && contentData == null)
             {
                 contentSerialized = JsonConvert.SerializeObject(data);
@@ -48,21 +36,21 @@ namespace MegaventoryTask.Services
                 case HttpMethod m when m == HttpMethod.Post:
                     if (contentData == null)
                     {
-                        result = client.PostAsync(requestURI, content);
+                        result = _httpClient.PostAsync(requestURI, content);
                     }
                     else
                     {
-                        result = client.SendAsync(new HttpRequestMessage(System.Net.Http.HttpMethod.Post, requestURI) { Content = new FormUrlEncodedContent(contentData) });
+                        result = _httpClient.SendAsync(new HttpRequestMessage(System.Net.Http.HttpMethod.Post, requestURI) { Content = new FormUrlEncodedContent(contentData) });
                     }
                     break;
                 case HttpMethod m when m == HttpMethod.Get:
-                    result = client.GetAsync(requestURI);
+                    result = _httpClient.GetAsync(requestURI);
                     break;
                 case HttpMethod m when m == HttpMethod.Put:
-                    result = client.PutAsync(requestURI, content);
+                    result = _httpClient.PutAsync(requestURI, content);
                     break;
                 case HttpMethod m when m == HttpMethod.Delete:
-                    result = client.DeleteAsync(requestURI);
+                    result = _httpClient.DeleteAsync(requestURI);
                     break;
                 default:
                     break;
@@ -72,23 +60,19 @@ namespace MegaventoryTask.Services
             {
                 Task<string> responseResultValue = result.Result.Content.ReadAsStringAsync();
 
-                //casting status code to service code
                 response.Code = (HttpStatusCode)result.Result.StatusCode;
 
-                //if service code not equal OK,new instante for T type.
                 if (response.Code != HttpStatusCode.OK)
                 {
-                    response.Data = new TModel();
                     return response;
                 }
 
-                //deserializing result body
-                response.Data = JsonConvert.DeserializeObject<TModel>(responseResultValue.Result);
+                response.Data = responseResultValue.Result;
                 return response;
             }
             catch
             {
-                response.Data = new TModel();
+                
                 return response;
             }
         }

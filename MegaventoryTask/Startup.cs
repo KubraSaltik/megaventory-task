@@ -36,6 +36,7 @@ namespace MegaventoryTask
             services.AddScoped<IProductServices, ProductServices>();
             services.AddScoped<ISupplierClientServices, SupplierClientServices>();
             services.AddScoped<ITaxServices, TaxServices>();
+            services.AddScoped<ISalesOrderServices, SalesOrderServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

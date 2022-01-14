@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace MegaventoryTask.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class DiscountController : ControllerBase
     {
         private IDiscountServices _discountServices;
@@ -16,11 +18,12 @@ namespace MegaventoryTask.Controllers
         {
             _discountServices = discountServices;
         }
+        [HttpPost ("CreateDiscount")]
         public IActionResult CreateDiscount(MvDiscount mvDiscount)
         {
             try
             {
-                return Ok(_discountServices);
+                return Ok(_discountServices.CreateDiscount(mvDiscount));
             }
             catch (Exception exp)
             {

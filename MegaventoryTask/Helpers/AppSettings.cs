@@ -7,6 +7,7 @@ namespace MegaventoryTask.Helpers
 {
     public class AppSettings
     {
-        string ApiKey { get; set; }
+        public string ApiKey { get; set; }
+        public string BaseURL { get; set; }
     }
 }

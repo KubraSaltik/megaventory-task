@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace MegaventoryTask.Controllers
 {
+    [Route("[controller]")]
+    [ApiController]
     public class SalesOrderController : ControllerBase
     {
         private ISalesOrderServices _salesOrderServices;
@@ -16,11 +18,12 @@ namespace MegaventoryTask.Controllers
         {
             _salesOrderServices = salesOrderServices;
         }
+        [HttpPost("CreateSalesOrder")]
         public IActionResult CreateSalesOrder(MvSalesOrder mvSalesOrder)
         {
             try
             {
-                return Ok(_salesOrderServices);
+                return Ok(_salesOrderServices.CreateSalesOrder(mvSalesOrder));
             }
             catch (Exception exp)
             {

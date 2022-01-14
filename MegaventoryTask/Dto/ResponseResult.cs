@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MegaventoryTask.Dto
 {
-    public class ResponseResult<T>
+    public class ResponseResult
     {
         private HttpStatusCode code;
         public HttpStatusCode Code
@@ -19,7 +19,7 @@ namespace MegaventoryTask.Dto
             }
         }
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public T Data { get; set; }
+        public object Data { get; set; }
 
         public ResponseResult()
         {
