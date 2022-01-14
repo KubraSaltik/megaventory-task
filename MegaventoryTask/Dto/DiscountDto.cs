@@ -7,8 +7,14 @@ namespace MegaventoryTask.Dto
 {
     public class DiscountDto
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public double Value { get; set; }
+        public string APIKEY { get; set; }
+        public string mvRecordAction { get; set; }
+        public MvDiscount mvDiscount { get; set; }
+
+    }
+    public class MvDiscount
+    {
+        public string DiscountName { get; set; }
+        public double DiscountValue { get; set; }
     }
 }

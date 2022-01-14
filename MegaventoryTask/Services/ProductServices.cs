@@ -14,9 +14,10 @@ namespace MegaventoryTask.Services
 
     public class ProductServices : IProductServices
     {
-        public ProductServices(IOptions<AppSettings> appSettings)
+        private IRequestService _requestServices;
+        public ProductServices(IOptions<AppSettings> appSettings, IRequestService requestService)
         {
-
+            _requestServices = requestService;
         }
     }
 }

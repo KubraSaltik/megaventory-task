@@ -14,9 +14,10 @@ namespace MegaventoryTask.Services
 
     public class TaxServices : ITaxServices
     {
-        public TaxServices(IOptions<AppSettings> appSettings)
+        private IRequestService _requestService;
+        public TaxServices(IOptions<AppSettings> appSettings, IRequestService requestService)
         {
-
+            _requestService = requestService;
         }
     }
 

@@ -14,9 +14,10 @@ namespace MegaventoryTask.Services
 
     public class DiscountServices : IDiscountServices
     {
-        public DiscountServices(IOptions<AppSettings> appSettings)
+        private IRequestService _requestService;
+        public DiscountServices(IOptions<AppSettings> appSettings,IRequestService requestService)
         {
-
+            _requestService = requestService;
         }
     }
 

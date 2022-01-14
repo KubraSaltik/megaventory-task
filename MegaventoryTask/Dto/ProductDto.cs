@@ -7,10 +7,16 @@ namespace MegaventoryTask.Dto
 {
     public class ProductDto
     {
-        public int SKU { get; set; }
-        public string Description { get; set; }
-        public double SalesPrice { get; set; }
-        public double PurchasePrice { get; set; }
+        public string APIKEY { get; set; }
+        public  MvProduct mvProduct  { get; set; }
+        public string mvRecordAction { get; set; }
 
+    }
+    public class MvProduct
+    {
+        public string ProductSKU { get; set; }
+        public string ProductDescription { get; set; }
+        public double ProductSellingPrice { get; set; }
+        public double ProductPurchasePrice { get; set; }
     }
 }

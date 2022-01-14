@@ -1,4 +1,5 @@
 using MegaventoryTask.Helpers;
+using MegaventoryTask.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,12 @@ namespace MegaventoryTask
             services.AddControllers();
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
+            services.AddScoped<IRequestService, RequestService>();
+            services.AddScoped<IDiscountServices, DiscountServices>();
+            services.AddScoped<IInventoryLocationServices, InventoryLocationServices>();
+            services.AddScoped<IProductServices, ProductServices>();
+            services.AddScoped<ISupplierClientServices, SupplierClientServices>();
+            services.AddScoped<ITaxServices, TaxServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

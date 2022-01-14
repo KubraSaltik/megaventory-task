@@ -14,9 +14,10 @@ namespace MegaventoryTask.Services
 
     public class InventoryLocationServices : IInventoryLocationServices
     {
-        public InventoryLocationServices(IOptions<AppSettings> appSettings)
+        private IRequestService _requestService;
+        public InventoryLocationServices(IOptions<AppSettings> appSettings, IRequestService requestService)
         {
-
+            _requestService = requestService;
         }
     }
 }

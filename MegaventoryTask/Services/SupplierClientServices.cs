@@ -12,11 +12,12 @@ namespace MegaventoryTask.Services
 
     }
 
-    public class SupplierClientServices : IDiscountServices
+    public class SupplierClientServices : ISupplierClientServices
     {
-        public SupplierClientServices(IOptions<AppSettings> appSettings)
+        private IRequestService _requestService;
+        public SupplierClientServices(IOptions<AppSettings> appSettings, IRequestService requestService)
         {
-
+            _requestService = requestService;
         }
     }
 }
